@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Personalised Outreach</title>
+</head>
+<body class="bg-white min-h-screen flex flex-col justify-center items-center">
+    <main class="w-full max-w-md p-8 flex flex-col items-center justify-center">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Personalised Outreach</h1>
+        <input type="text" id="urlInput" placeholder="Enter website URL" class="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700 transition" />
+        <button id="submitBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-lg p-3 mb-4 font-semibold transition">Submit</button>
+        <div id="emailContent" class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-md min-h-[100px] w-full text-gray-700"></div>
+    </main>
+    <footer class="text-xs text-gray-400 mt-8 text-center w-full">
+        <p>&copy; 2026 Personalised Outreach. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            const url = document.getElementById("urlInput").value;
+            console.log("Submitted URL:", url);
+            fetch("/get_email_content", {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({ url: url })
+            })
+            .then(response => response.json())
+            .then(data =>{
+                console.log(data);
+                document.getElementById("emailContent").innerText = data.email_content;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>
