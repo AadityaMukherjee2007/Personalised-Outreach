@@ -44,10 +44,6 @@ def generate_email(company_url):
         return f"Error generating email: {e}"
 
 
-def generate_research(company_url):
-    ...
-
-
 def main():
     init()
     company_url = input("URL: ")
